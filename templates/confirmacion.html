@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud Completada - Becas IMDES</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 700px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: scaleIn 0.5s ease-out 0.2s both;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .success-icon svg {
+            width: 50px;
+            height: 50px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .message {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+
+        .message h2 {
+            color: #2e7d32;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .message p {
+            color: #1b5e20;
+            line-height: 1.6;
+        }
+
+        .instructions {
+            margin-top: 30px;
+        }
+
+        .instructions h3 {
+            color: #2a5298;
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .document-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .document-item {
+            display: flex;
+            align-items: start;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .document-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .document-icon {
+            width: 24px;
+            height: 24px;
+            background: #667eea;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .document-text {
+            flex: 1;
+        }
+
+        .document-text strong {
+            color: #2a5298;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .document-text span {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .important-note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 5px;
+        }
+
+        .important-note h4 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .important-note p {
+            color: #856404;
+            line-height: 1.6;
+        }
+
+        .office-info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+
+        .office-info h4 {
+            color: #1565c0;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .office-info p {
+            color: #0d47a1;
+            line-height: 1.8;
+            margin-bottom: 5px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            text-align: center;
+            display: block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f9fa;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="success-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#4caf50" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <h1>¡Solicitud Completada!</h1>
+            <p>Tu formulario ha sido generado exitosamente</p>
+        </div>
+
+        <div class="content">
+            <div class="message">
+                <h2>✓ PDF Descargado</h2>
+                <p>Tu planilla de solicitud de beca ha sido generada y descargada correctamente. Ahora debes completar los siguientes pasos para finalizar tu solicitud.</p>
+            </div>
+
+            <div class="instructions">
+                <h3>📋 Documentos Requeridos</h3>
+                <p style="margin-bottom: 20px; color: #666;">Debes reunir los siguientes documentos y llevarlos a la oficina del IMDES:</p>
+
+                <ul class="document-list">
+                    <li class="document-item">
+                        <div class="document-icon">1</div>
+                        <div class="document-text">
+                            <strong>Planilla Impresa</strong>
+                            <span>Imprime el PDF que acabas de descargar y fírmalo</span>
+                        </div>
+                    </li>
+                    <li class="document-item">
+                        <div class="document-icon">2</div>
+                        <div class="document-text">
+                            <strong>Copia de Cédula de Identidad</strong>
+                            <span>Copia legible de tu cédula de identidad</span>
+                        </div>
+                    </li>
+                    <li class="document-item">
+                        <div class="document-icon">3</div>
+                        <div class="document-text">
+                            <strong>Constancia de Estudios</strong>
+                            <span>Documento que certifique que estás estudiando actualmente, firmado y sellado</span>
+                        </div>
+                    </li>
+                    <li class="document-item">
+                        <div class="document-icon">4</div>
+                        <div class="document-text">
+                            <strong>Copia de Cédula del Representante</strong>
+                            <span>Solo en caso de ser menor de edad</span>
+                        </div>
+                    </li>
+                    <li class="document-item">
+                        <div class="document-icon">5</div>
+                        <div class="document-text">
+                            <strong>Carpeta Amarilla Tipo Carta</strong>
+                            <span>Organiza todos los documentos en una carpeta amarilla</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="important-note">
+                <h4>⚠️ Importante</h4>
+                <p>Asegúrate de que todos los documentos sean copias legibles y estén organizados en la carpeta amarrilla antes de entregarlos. Verifica que la planilla esté firmada tanto por el estudiante como por el representante.</p>
+            </div>
+
+            <div class="office-info">
+                <h4>📍 Lugar de Entrega</h4>
+                <p><strong>Instituto Municipal de Desarrollo Social (IMDES)</strong></p>
+                <p>Calle entre av. 18 y 19 con calle Donaldo García esq. Alcaldía Rosario de Perijá piso PB o FB sector casco central, Villa del Rosario, Estado Zulia</p>
+                <p><strong>Teléfono:</strong> (0412-1409611) </p>
+            </div>
+
+            <div class="buttons">
+                <a href="/" class="btn btn-secondary">← Nueva Solicitud</a>
+                <button onclick="window.print()" class="btn btn-primary">🖨️ Imprimir Instrucciones</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    window.onload = function() {
+        // Redirige la ventana a la descarga (el navegador lo manejará como archivo)
+        window.location.href = "{{ url_for('descargar_pdf') }}";
+    };
+</script>

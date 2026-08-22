@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Becas Estudiantiles "Prof. Dilio Gutiérrez"</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #162a4e 0%, #28a745 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden; /* Esto permite que la imagen respete el redondeo superior */
+        }
+
+        /* Estilo para que la imagen sea un banner completo */
+        .banner-img {
+            width: 100%;
+            height: auto; /* Esto garantiza que se vea la imagen completa */
+            display: block;
+        }
+
+        form {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            color: #2a5298;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        input[readonly] {
+            background-color: #f0f0f0;
+            color: #555;
+            cursor: not-allowed;
+            border: 1px solid #ccc;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .checkbox-item:hover {
+            background: #e9ecef;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .radio-item input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Estilos del Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 0;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+        }
+
+        .modal-body { padding: 30px; text-align: center; line-height: 1.6; color: #444; }
+
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .btn-confirmar, .btn-cancelar {
+            flex: 1; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;
+        }
+
+        .btn-confirmar { background: #28a745; color: white; }
+        .btn-cancelar { background: #dc3545; color: white; }
+
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; }
+            form { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          {% if category == 'error' %}
+            <div style="color: white; background-color: red; padding: 10px; margin-bottom: 10px;">
+              {{ message }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <div class="container">
+        <img src="{{url_for('static', filename='banner.png')}}" alt="Banner Becas Estudiantiles" class="banner-img">
+
+        <form action="/generar_pdf" method="POST">
+            <div class="form-group">
+                <label for="fecha">Fecha:</label>
+                <input type="date" id="fecha" name="fecha" value="{{ fecha_actual }}" required>
+            </div>
+
+            <div class="section">
+                <div class="section-title">1. UBICACIÓN GEOGRÁFICA</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="estado">Estado:</label>
+                        <input type="text" id="estado" name="estado" value="Zulia" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="municipio">Municipio:</label>
+                        <input type="text" id="municipio" name="municipio" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="parroquia">Parroquia:</label>
+                        <select id="parroquia" name="parroquia" required>
+                            <option value="">Seleccione...</option>
+                            <option value="EL ROSARIO">EL ROSARIO</option>
+                            <option value="SIXTO ZAMBRANO">SIXTO ZAMBRANO</option>
+                            <option value="DONALDO GARCÍA">DONALDO GARCÍA</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sector">Sector:</label>
+                        <input type="text" id="sector" name="sector" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">2. DATOS GENERALES DEL ESTUDIANTE</div>
+                <div class="form-group">
+                    <label for="nombres_completos">Nombres Completos:</label>
+                    <input type="text" id="nombres_completos" name="nombres_completos" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cedula">Cédula de Identidad (Solo numeros):</label>
+                        <input type="number" id="cedula" name="cedula" step="1" placeholder="12345678" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="genero">Género:</label>
+                        <select id="genero" name="genero" required>
+                            <option value="">Seleccione...</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="direccion">Dirección Exacta:</label>
+                    <input type="text" id="direccion" name="direccion" maxlength="80" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="correo">Correo Electrónico:</label>
+                        <input type="email" id="correo" name="correo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono:</label>
+                        <input type="text" id="telefono" name="telefono" placeholder="0424-1234567" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="institucion">Nombre de Institución Educativa:</label>
+                        <input type="text" id="institucion" name="institucion" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="grado">Grado o Nivel Educativo:</label>
+                        <input type="text" id="grado" name="grado" placeholder="Ej: 1er año" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Turno Escolar:</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="diurno" name="turno" value="DIURNO" required>
+                                <label for="diurno">Diurno</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="vespertino" name="turno" value="VESPERTINO">
+                                <label for="vespertino">Vespertino</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="nocturno" name="turno" value="NOCTURNO">
+                                <label for="nocturno">Nocturno</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de Institución:</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="publica" name="tipo_institucion" value="PUBLICA" required>
+                                <label for="publica">Pública</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="privada" name="tipo_institucion" value="PRIVADA">
+                                <label for="privada">Privada</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Ubicación de la Universidad:</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="la_villa" name="ubicacion_universidad" value="La Villa" required>
+                                <label for="la_villa">La Villa del Rosario</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="foraneo" name="ubicacion_universidad" value="foraneo">
+                                <label for="foraneo">Foraneos (p. ej. Maracaibo)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">3. SITUACIÓN SOCIOECONÓMICA</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="num_personas">Número de Personas que Viven con Usted:</label>
+                        <input type="number" id="num_personas" name="num_personas" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="num_hermanos">Número de Hermanos en Edad Escolar:</label>
+                        <input type="number" id="num_hermanos" name="num_hermanos" min="0" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Principal Fuente de Ingreso del Hogar:</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="formal" name="fuente_ingreso" value="FORMAL" required>
+                                <label for="formal">Formal</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="informal" name="fuente_ingreso" value="INFORMAL">
+                                <label for="informal">Informal</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>El Estudiante Trabaja para Contribuir al Hogar:</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="trabaja_si" name="trabaja" value="SI" required>
+                                <label for="trabaja_si">Sí</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="trabaja_no" name="trabaja" value="NO">
+                                <label for="trabaja_no">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">4. NECESIDADES ESPECÍFICAS</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>¿Cuáles son las Principales Dificultades Económicas que Afectan su Educación?</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="utiles" name="dificultades" value="utiles">
+                                <label for="utiles">Falta de útiles escolares</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="matricula" name="dificultades" value="matricula">
+                                <label for="matricula">Dificultades para pagar matrícula</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="transporte" name="dificultades" value="transporte">
+                                <label for="transporte">Problemas de transporte</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="tecnologia" name="dificultades" value="tecnologia">
+                                <label for="tecnologia">Falta de tecnología (PC/Internet)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="alimentacion" name="dificultades" value="alimentacion">
+                                <label for="alimentacion">Alimentación insuficiente</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="hospedaje" name="dificultades" value="hospedaje">
+                                <label for="hospedaje">Hospedaje</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>¿Qué Tipo de Apoyo Considera Más Necesario para Continuar sus Estudios?</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="ayuda_economica" name="apoyos" value="ayuda_economica">
+                                <label for="ayuda_economica">Ayuda económica directa</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="material_escolar" name="apoyos" value="material_escolar">
+                                <label for="material_escolar">Material escolar</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="transporte_apoyo" name="apoyos" value="transporte_apoyo">
+                                <label for="transporte_apoyo">Transporte</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="alimentacion_apoyo" name="apoyos" value="alimentacion_apoyo">
+                                <label for="alimentacion_apoyo">Alimentación</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="beca" name="apoyos" value="beca">
+                                <label for="beca">Beca estudiantil</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="empleo" name="apoyos" value="empleo">
+                                <label for="empleo">Empleo</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">5. DATOS BANCARIOS</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="banco">Banco:</label>
+                        <input type="text" id="banco" name="banco" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipo_cuenta">Tipo de Cuenta:</label>
+                        <select id="tipo_cuenta" name="tipo_cuenta" required>
+                            <option value="">Seleccione...</option>
+                            <option value="Corriente">Corriente</option>
+                            <option value="Ahorro">Ahorro</option>
+                            <option value="Otros">Otros</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="numero_cuenta">Número de Cuenta:</label>
+                    <input type="number" id="numero_cuenta" name="numero_cuenta" required>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">6. SERVICIO COMUNITARIO</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>¿Estaria usted interesado(a) en realizar servicio comunitario?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="servicio_si" name="servicio_comunitario" value="SI" required>
+                                <label for="servicio_si">Sí</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="servicio_no" name="servicio_comunitario" value="NO">
+                                <label for="servicio_no">No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="horarios">Defina los horarios de disponibilidad para realizar el servicio:</label>
+                        <input type="text" id="horarios" name="horarios">
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="submit-btn" onclick="abrirModal()">Registrar</button>
+        </form>
+    </div>
+    <div id="modalConfirmacion" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Declaración</h3>
+        </div>
+        <div class="modal-body">
+            <p>Confirmo que los datos ingresados son fieles y verídicos. Comprendo que el registro de información falsa o errónea puede dar lugar a la anulación de la solicitud o sanciones administrativas.</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn-cancelar" onclick="cerrarModal()">Volver</button>
+            <button type="button" class="btn-confirmar" onclick="enviarFormularioFinal()">Confirmar</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    const modal = document.getElementById("modalConfirmacion");
+    const form = document.querySelector("form");
+
+    function abrirModal() {
+        // Primero validamos si el navegador ve los campos obligatorios llenos
+        if (form.checkValidity()) {
+            modal.style.display = "block";
+        } else {
+            form.reportValidity(); // Muestra los mensajes de "llene este campo"
+        }
+    }
+
+    function cerrarModal() {
+        modal.style.display = "none";
+    }
+
+    function enviarFormularioFinal() {
+        modal.style.display = "none";
+        form.submit(); // Aquí es donde finalmente se envía a Flask
+    }
+
+    // Cerrar si hacen clic fuera del cuadrito blanco
+    window.onclick = function(event) {
+        if (event.target == modal) { cerrarModal(); }
+    }
+</script>

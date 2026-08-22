@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Existente - Becas IMDES</title>
+    <style>
+        /* Reutilizamos tu base estética */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); /* Fondo más cálido/alerta */
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 700px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #856404 0%, #b08d24 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .warning-icon {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: scaleIn 0.5s ease-out 0.2s both;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .message-alert {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .message-alert h2 {
+            color: #856404;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .message-alert p {
+            color: #664d03;
+            line-height: 1.6;
+            font-size: 18px;
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .phone-number {
+            display: block;
+            font-size: 24px;
+            color: #2a5298;
+            font-weight: bold;
+            margin: 15px 0;
+            text-decoration: none;
+        }
+
+        .btn-return {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .btn-return:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .content { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="warning-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#ffc107" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="8.5" cy="7" r="4"></circle>
+                    <line x1="18" y1="8" x2="18" y2="12"></line>
+                    <line x1="18" y1="16" x2="18.01" y2="16"></line>
+                </svg>
+            </div>
+            <h1>Aviso de Registro</h1>
+            <p>Verificación de datos en el sistema</p>
+        </div>
+
+        <div class="content">
+            <div class="message-alert">
+                <h2>Usted ya se encuentra registrado</h2>
+                <p>Nuestros registros indican que ya existe una solicitud vinculada a sus datos de identidad.</p>
+            </div>
+
+            <div class="info-box" style="text-align: center;">
+                <p style="color: #666; margin-bottom: 10px;">Para más información o corrección de datos, por favor comuníquese a cualquiera de los siguientes números:</p>
+                <a href="https://wa.me/584127803589" class="phone-number">+584127803589</a>
+                <a href="https://wa.me/584246272340" class="phone-number">+584246272340</a>
+                <p style="font-size: 14px; color: #888;">Atención de Lunes a Viernes | Horario de Oficina</p>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <a href="/" class="btn-return">Volver al inicio</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
