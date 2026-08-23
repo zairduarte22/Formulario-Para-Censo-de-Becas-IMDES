@@ -8,11 +8,14 @@ import os
 from datetime import date, datetime
 import gspread
 import textwrap
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max
-app.secret_key = os.environ.get('FLASK_SECRET_KEY')
+app.secret_key = os.environ.get('FLASK_SECRET_KEY') or os.urandom(32)
 
 # Crear carpeta uploads si no existe
 if not os.path.exists('uploads'):
