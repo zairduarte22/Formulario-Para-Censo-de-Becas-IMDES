@@ -17,9 +17,12 @@ Sistema web desarrollado con Flask para la recopilación de información de soli
 
 ## Instalación
 
-1. Navega al directorio del proyecto:
+1. Navega al directorio del proyecto, usando:
+```bash
+cd {Nombre de la carpeta del Proyecto}
+```
 
-2. Instala las dependencias:
+3. Instala las dependencias:
 ```bash
 pip install -r requirements.txt
 ```
