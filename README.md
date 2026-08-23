@@ -18,9 +18,6 @@ Sistema web desarrollado con Flask para la recopilación de información de soli
 ## Instalación
 
 1. Navega al directorio del proyecto:
-```bash
-cd becas_app
-```
 
 2. Instala las dependencias:
 ```bash
